@@ -11,7 +11,7 @@ PR Rules:
 
 # Discovered a bug?
 
-**Step 1. [Open an issue](https://github.com/errogaht/yandex-ocr-php).** Please include:
+**Step 1. [Open an issue](https://github.com/errogaht/yandex-ocr-php/issues).** Please include:
 - (A) what you did
 - (B) what you expected to happen
 - (C) what happened
