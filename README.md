@@ -1,4 +1,10 @@
 # yandex-ocr-php
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/errogaht/yandex-ocr-php.svg?style=flat-square)](https://packagist.org/packages/errogaht/yandex-ocr-php)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+![Build Status](https://img.shields.io/codeship/c11c37d0-4ac9-0132-eda4-425a8a7bf7a3.svg?style=flat-square)
+[![Total Downloads](https://img.shields.io/packagist/dt/errogaht/yandex-ocr-php.svg?style=flat-square)](https://packagist.org/packages/errogaht/yandex-ocr-php)
+
 Unofficial PHP package to get results from Yandex translate OCR
 
 
