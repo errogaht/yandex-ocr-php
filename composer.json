@@ -1,0 +1,29 @@
+{
+    "name": "errogaht/yandex-ocr-php",
+    "type": "library",
+    "description": "Unofficial PHP client for Yandex-translate OCR",
+    "keywords": ["ocr","yandex", "yandex translate", "translate ocr"],
+    "homepage": "https://github.com/errogaht/yandex-ocr-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Teterin",
+            "email": "7018407@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "ext-curl": "*",
+        "ext-mbstring": "*",
+        "wapmorgan/file-type-detector": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Errogaht\\YandexOCR\\": "src/"
+        }
+    }
+}
