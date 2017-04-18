@@ -12,6 +12,7 @@ Features:
 - Upload image to Yandex Translate OCR and get response in PHP array
 - Convert response to plain text
 - Unit test
+- Daily build guarantee that package is work, if you see build badge above green - that's mean package work right now
 
 ## Install
 
