@@ -1,0 +1,14 @@
+language: php
+
+php:
+  - 5.5
+  - 7.1
+  - nightly
+  - hhvm
+
+
+sudo: false
+
+install: travis_retry composer install --no-interaction --prefer-source
+
+script: vendor/bin/phpunit
