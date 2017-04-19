@@ -94,8 +94,8 @@ class Client
             'srv' => 'tr-image',
             'lang' => "$this->langFrom,$this->langTo"
         ]);
-
-        curl_setopt($ch, CURLOPT_URL, $this->url . '?' . $q);
+        $url = $this->url . '?' . $q;
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -112,18 +112,20 @@ class Client
             throw new \Exception('No mime type provided or unable to get file mime type');
         }
 
+        $filePostName = 'blob';
         $fields = [
-            'file' => new \CurlFile($this->filePath, $this->fileMime, 'blob')
+            'file' => new \CurlFile($this->filePath, $this->fileMime, $filePostName)
         ];
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 
         $server_output = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
         if ($httpcode !== 200) {
-            throw new \ErrorException($server_output);
+            throw new YandexAPIErrorResponseException($server_output, curl_getinfo($ch), $this->filePath, $this->fileMime, $filePostName);
         }
+        curl_close($ch);
         return json_decode($server_output, true);
     }
 }
