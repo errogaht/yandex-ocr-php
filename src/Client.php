@@ -101,11 +101,8 @@ class Client
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         if (empty($this->fileMime)) {
-            $type = Detector::detectByContent($this->filePath);
-            if (is_array($type) && count($type) === 2) {
-
-            }
-            $this->fileMime = implode('/', $type);
+            $type = Detector::detectByFilename($this->filePath);
+            $this->fileMime = isset($type[1]) ? Detector::getMimeType($type[1]) : null;
         }
 
         if (empty($this->fileMime)) {
