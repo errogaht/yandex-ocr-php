@@ -92,7 +92,8 @@ class Client
         $ch = curl_init();
         $q = http_build_query([
             'srv' => 'tr-image',
-            'lang' => "$this->langFrom,$this->langTo"
+            'lang' => "$this->langFrom,$this->langTo",
+            'sid' => $this->getSid()
         ]);
         $url = $this->url . '?' . $q;
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -123,5 +124,37 @@ class Client
         }
         curl_close($ch);
         return json_decode($server_output, true);
+    }
+
+    /**
+     * Yandex add sid param to prevent this script working
+     * This method return sid to make ocr request
+     * @throws \Errogaht\YandexOCR\UnableToGetYandexSessionIdException
+     */
+    private function getSid()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://translate.yandex.com/ocr');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+
+        $server_output = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpcode !== 200) {
+            throw new YandexAPIErrorResponseException($server_output, curl_getinfo($ch));
+        }
+        curl_close($ch);
+        preg_match('~\(this, this\.document, (\{.*\}), this\.yandexTranslate\);~s', $server_output, $matches);
+        if (!empty($matches[1])) {
+            $matches = preg_replace('~^\s+~m', '', $matches[1]);
+            preg_match("~SID: '([\\w\.-_]+)',~s", $matches, $matches);
+            if (isset($matches[1])) {
+                return $matches[1];
+            }
+        }
+        throw new UnableToGetYandexSessionIdException();
     }
 }
